@@ -20,6 +20,10 @@ public enum District {
         this.districtName = districtName;
     }
 
+    public String getDistrictName() {
+        return districtName;
+    }
+
     public static Map<String,String> type(){
         Map<String,String> districts=new TreeMap<>();
         for(District it: District.values()){

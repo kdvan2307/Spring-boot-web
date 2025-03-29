@@ -3,8 +3,11 @@ package com.javaweb.api.admin;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.repository.BuildingRepository;
+import com.javaweb.service.AssignmentBuildingService;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,17 +17,19 @@ import java.util.List;
 public class BuildingAPI {
     @Autowired
     private BuildingService buildingService;
+    @Autowired
+    private AssignmentBuildingService assignmentBuildingService;
 
     @PostMapping
-    public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
+    public ResponseEntity<BuildingDTO> addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
         //xuong DB de update hoac them moi
-        return buildingDTO;
+        return ResponseEntity.ok(buildingService.addOrUpdateBuilding(buildingDTO));
     }
 
     @DeleteMapping("/{ids}")
-    public void deleteBuilding(@PathVariable List<Long> ids) {
+    public void deleteBuilding(@PathVariable Long[] ids) {
         //xuong DB de xoa building theo danh sach id gui ve
-        System.out.printf("ok  ");
+        buildingService.deleteBuilding(ids);
     }
 
     @GetMapping("/{id}/staffs")
@@ -33,9 +38,9 @@ public class BuildingAPI {
         return result;
     }
 
-    @PostMapping("/assingment")
+    @PostMapping("/assignment")
     public void updateAssingmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
-        System.out.println("OK");
+        assignmentBuildingService.addAssignmentBuildingEntity(assignmentBuildingDTO);
 
     }
 }

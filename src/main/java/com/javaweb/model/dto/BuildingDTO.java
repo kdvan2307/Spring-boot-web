@@ -12,7 +12,20 @@ public class BuildingDTO extends AbstractDTO{
     private String ward;
     private String street;
     private Long numberOfBasement;
+    private String structure;
+    private String serviceFee;
+    private String rentpricescription;
+    private String carFee;
+    private String motoFee;
+    private String overtimeFee;
+    private String electricityBill;
+    private String deposit;
+    private String pay;
     private String direction;
+    private String rentalTerm;
+    private String decorationTime;
+    private String brokerageFee;
+    private String note;
     private Long level;
     private String rentArea;
     private Long rentPrice;
@@ -122,5 +135,108 @@ public class BuildingDTO extends AbstractDTO{
 
     public void setTypeCode(List<String> typeCode) {
         this.typeCode = typeCode;
+    }
+
+    public String getStructure() {
+        return structure;
+    }
+
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
+
+    public String getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(String serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public String getCarFee() {
+        return carFee;
+    }
+
+    public void setCarFee(String carFee) {
+        this.carFee = carFee;
+    }
+
+    public String getMotoFee() {
+        return motoFee;
+    }
+
+    public void setMotoFee(String motoFee) {
+        this.motoFee = motoFee;
+    }
+
+    public String getOvertimeFee() {
+        return overtimeFee;
+    }
+
+    public void setOvertimeFee(String overtimeFee) {
+        this.overtimeFee = overtimeFee;
+    }
+
+    public String getElectricityBill() {
+        return electricityBill;
+    }
+
+    public void setElectricityBill(String electricityBill) {
+        this.electricityBill = electricityBill;
+    }
+
+    public String getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
+    }
+
+    public String getPay() {
+        return pay;
+    }
+
+    public void setPay(String pay) {
+        this.pay = pay;
+    }
+
+    public String getRentalTerm() {
+        return rentalTerm;
+    }
+
+    public void setRentalTerm(String rentalTerm) {
+        this.rentalTerm = rentalTerm;
+    }
+
+    public String getDecorationTime() {
+        return decorationTime;
+    }
+
+    public void setDecorationTime(String decorationTime) {
+        this.decorationTime = decorationTime;
+    }
+
+    public String getBrokerageFee() {
+        return brokerageFee;
+    }
+
+    public void setBrokerageFee(String brokerageFee) {
+        this.brokerageFee = brokerageFee;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+    public String getRentpricescription() {
+        return rentpricescription;
+    }
+
+    public void setRentpricescription(String rentpricescription) {
+        this.rentpricescription = rentpricescription;
     }
 }

@@ -54,7 +54,8 @@
                                                 </div>
                                                 <div class ="col-xs-6">
                                                     <label class = "name">Diện tích sàn</label>
-                                                    <input type ="number" class = "form-control" name="floorArea" value="">
+<%--                                                    <input type ="number" class = "form-control" name="floorArea" value="">--%>
+                                                    <form:input  class = "form-control"  path="floorArea"/>
                                                 </div>
                                             </div>
 
@@ -86,39 +87,47 @@
                                                 </div>
                                                 <div class ="col-xs-4">
                                                     <label class = "name">Hướng</label>
-                                                    <input type ="text" class = "form-control" name="direction" value="">
+<%--                                                    <input type ="text" class = "form-control" name="direction" value="">--%>
+                                                    <form:input  class = "form-control"  path="direction"/>
                                                 </div>
                                                 <div class ="col-xs-4">
                                                     <label class = "name">Hạng</label>
-                                                    <input type ="number" class = "form-control"  name="level" value="">
+<%--                                                    <input type ="number" class = "form-control"  name="level" value="">--%>
+                                                    <form:input  class = "form-control"  path="level"/>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12">
                                                 <div class ="col-xs-3">
                                                     <label class = "name">Diện tích từ</label>
-                                                    <input type ="number" class = "form-control" name="areaFrom" value="">
+<%--                                                    <input type ="number" class = "form-control" name="areaFrom" value="">--%>
+                                                        <form:input  class = "form-control"  path="areaFrom"/>
                                                 </div>
                                                 <div class ="col-xs-3">
                                                     <label class = "name">Diện tích đến</label>
-                                                    <input type ="number" class = "form-control" name="areaTo" value="">
+<%--                                                    <input type ="number" class = "form-control" name="areaTo" value="">--%>
+                                                    <form:input  class = "form-control"  path="areaTo"/>
                                                 </div>
                                                 <div class ="col-xs-3">
                                                     <label class = "name">Giá thuê từ</label>
-                                                    <input type ="number" class = "form-control" name="rentPriceFrom" value="">
+<%--                                                    <input type ="number" class = "form-control" name="rentPriceFrom" value="">--%>
+                                                    <form:input  class = "form-control"  path="rentPriceFrom"/>
                                                 </div>
                                                 <div class ="col-xs-3">
                                                     <label class = "name">Giá thuê đến</label>
-                                                    <input type ="number" class = "form-control" name="rentPriceTo" value="">
+<%--                                                    <input type ="number" class = "form-control" name="rentPriceTo" value="">--%>
+                                                        <form:input  class = "form-control"  path="rentPriceTo"/>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12">
                                                 <div class ="col-xs-5">
                                                     <label class = "name">Tên quản lý</label>
-                                                    <input type ="text" class = "form-control"  name="managerName" value="">
+<%--                                                    <input type ="text" class = "form-control"  name="managerName" value="">--%>
+                                                    <form:input  class = "form-control"  path="managerName"/>
                                                 </div>
                                                 <div class ="col-xs-5">
                                                     <label class = "name">SDT quản lý</label>
-                                                    <input type ="text" class = "form-control" name="managerPhone" value="">
+<%--                                                    <input type ="text" class = "form-control" name="managerPhone" value="">--%>
+                                                    <form:input  class = "form-control"  path="managerPhone"/>
                                                 </div>
                                                 <div class ="col-xs-2">
                                                     <label class = "name">Nhân Viên</label>
@@ -222,7 +231,7 @@
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <button class="btn btn-xs btn-success" title="Giao tòa nhà"
-                                                onclick="assingmentBuilding(${item.id})">
+                                                onclick="assignmentBuilding(${item.id})">
                                             <i class="ace-icon fa fa-check bigger-120"></i>
                                         </button>
 
@@ -289,7 +298,7 @@
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div>
-<div class="modal fade" id="assingmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+<div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -315,7 +324,7 @@
                 <input type="hidden" id="buildingId" name="BuildingId" value="">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnassingmentBuilding">Giao tòa nhà</button>
+                <button type="button" class="btn btn-default" id="btnassignmentBuilding">Giao tòa nhà</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
         </div>
@@ -324,14 +333,15 @@
 </div>
 
     <script>
-        function assingmentBuilding(buildingId){
-            $('#assingmentBuildingModal').modal();
+        function assignmentBuilding(buildingId){
+            $('#assignmentBuildingModal').modal();
             loadStaff(buildingId);
             $('#buildingId').val(buildingId);
 
         }
 
-
+        // gửi yêu cầu AJAX GET để lấy danh sách nhân viên đang được phân công vào một tòa nhà cụ thể (buildingId)
+        // và hiển thị danh sách này trong bảng HTML.
         function loadStaff(buildingId){
             $.ajax({
                 type: "GET",
@@ -342,6 +352,9 @@
                 success: function(response){
                     var row ='';
                     $.each(response.data,function (index,item){
+                        // response.data là một mảng danh sách nhân viên nhận được từ API
+                        //     index: vị trí của phần tử trong mảng.
+                        //     item: đối tượng nhân viên chứa thông tin như staffId, fullName, checked.
                         row += '<tr>';
                         row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id = "checkbox_'+ item.staffId +'" class = "check-box-element"' +  item.checked + '/></td>';
                         row += '<td class= "text-center">' + item.fullName + '</td>';
@@ -357,7 +370,8 @@
                 }
             });
         }
-        $('#btnassingmentBuilding').click(function(e){
+        // khi ấn vào nút giao tòa nhà
+        $('#btnassignmentBuilding').click(function(e){
             e.preventDefault();
             var data ={};
             data['buildingId'] = $('#buildingId').val();
@@ -366,14 +380,15 @@
             }).get();
             data['staffs'] = staffs;
             if (data['staffs'] !=''){
-                assingment(data);
+                assignment(data);
             }
             console.log("OK");
         })
-        function assingment(data){
+        //  gửi ajax để cập nhật danh sách nhân viên
+        function assignment(data){
             $.ajax({
                 type: "POST",
-                url: "${buildingAPI}/" +  'assingment' ,
+                url: "${buildingAPI}/" +  'assignment' ,
                 data: JSON.stringify(data),
                 contentType:"application/json", // định dạng lạilại
                 dataType:"json",
@@ -399,6 +414,7 @@
         }
         $('#btnDeleteBuilding').click(function(e){
             e.preventDefault();
+            var data = {};
             var buildingIds =$('#tableList').find('tbody input[type = checkbox]:checked').map(function(){
                 return $(this).val();
             }).get();
