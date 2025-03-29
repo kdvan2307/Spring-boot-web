@@ -87,20 +87,16 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingDTO addOrUpdateBuilding(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = modelMapper.map(buildingDTO,BuildingEntity.class);
-        buildingEntity.setType(String.join(",",buildingDTO.getTypeCode()));
+        BuildingEntity buildingEntity = buildingConverter.toBuildingEntity(buildingDTO);
         buildingRepository.save(buildingEntity);
-        if (StringUtils.check(buildingDTO.getRentArea())) {
-            rentAreaService.addRentArea(buildingDTO);
-        }
         return buildingDTO;
     }
 
     @Override
-    public void deleteBuilding(Long[] ids) {
-        rentAreaService.deleteRentArea(ids);
-        assignmentBuildingService.deleteAssignmentBuilding(ids);
-        for (Long it : ids) buildingRepository.deleteById(it);
+    public BuildingDTO deleteBuildings(Long[] ids) {
+        BuildingEntity buildingEntity = buildingRepository.findById(ids[0]).get();
+        buildingRepository.deleteByIdIn(ids);
+        return buildingConverter.toBuildingDTO(buildingEntity);
     }
 
 

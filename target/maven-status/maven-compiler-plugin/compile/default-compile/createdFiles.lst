@@ -33,6 +33,8 @@ com\javaweb\service\IUserService.class
 com\javaweb\model\dto\BuildingDTO.class
 com\javaweb\utils\DistrictCode.class
 com\javaweb\model\dto\PasswordDTO.class
+com\javaweb\service\impl\AssignmentBuildingServiceImpl.class
+com\javaweb\repository\AssignmentBuildingRepository.class
 com\javaweb\enums\TypeCode.class
 com\javaweb\model\dto\DistrictDTO.class
 com\javaweb\repository\custom\impl\RoleRepositoryImpl.class
@@ -41,11 +43,12 @@ com\javaweb\repository\custom\BuildingRepositoryCustom.class
 com\javaweb\service\IRoleService.class
 com\javaweb\api\web\NewAPI.class
 com\javaweb\security\CustomSuccessHandler.class
+com\javaweb\entity\AssignmentBuildingEntity.class
 com\javaweb\model\dto\RoleDTO.class
 com\javaweb\utils\MessageUtils.class
 com\javaweb\utils\MapUtils.class
+com\javaweb\converter\RentAreaConverter.class
 com\javaweb\enums\District.class
-com\javaweb\entity\AssignBuildingEntity.class
 com\javaweb\service\impl\UserService.class
 com\javaweb\model\dto\MyUserDetail.class
 com\javaweb\service\impl\CustomUserDetailService.class
@@ -66,6 +69,7 @@ com\javaweb\controller\admin\BuildingController.class
 com\javaweb\converter\BuildingSearchBuilderConverter.class
 com\javaweb\repository\custom\impl\BuildingRepositoryImpl.class
 com\javaweb\model\dto\AbstractDTO.class
+com\javaweb\service\AssignmentBuildingService.class
 com\javaweb\api\admin\UserAPI.class
 com\javaweb\api\admin\BuildingAPI.class
 com\javaweb\model\dto\AssignmentBuildingDTO.class

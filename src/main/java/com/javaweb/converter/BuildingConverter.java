@@ -23,6 +23,8 @@ public class BuildingConverter {
     private ModelMapper modelMapper;
     @Autowired
     private RentAreaRepository rentAreaRepository;
+    @Autowired
+    private RentAreaConverter rentAreaConverter;
     public BuildingSearchResponse toBuildingResponse(BuildingEntity item) {
         BuildingSearchResponse building = modelMapper.map(item, BuildingSearchResponse.class);
 
@@ -52,6 +54,11 @@ public class BuildingConverter {
         List<String> type = Arrays.asList(building.getType().split(","));
         dto.setTypeCode(type);
         return dto;
-
+    }
+    public BuildingEntity toBuildingEntity(BuildingDTO buildingDTO){
+        BuildingEntity buildingEntity = modelMapper.map(buildingDTO,BuildingEntity.class);
+        buildingEntity.setType(String.join(",",buildingDTO.getTypeCode()));
+        buildingEntity.setItems(rentAreaConverter.toListRentAreaEntity(buildingDTO,buildingEntity));
+        return buildingEntity;
     }
 }

@@ -29,7 +29,7 @@ public class BuildingAPI {
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable Long[] ids) {
         //xuong DB de xoa building theo danh sach id gui ve
-        buildingService.deleteBuilding(ids);
+        buildingService.deleteBuildings(ids);
     }
 
     @GetMapping("/{id}/staffs")

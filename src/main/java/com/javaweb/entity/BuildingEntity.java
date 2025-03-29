@@ -76,9 +76,6 @@ public class BuildingEntity {
     public void setUsersEntities(List<UserEntity> usersEntities) {
         this.usersEntities = usersEntities;
     }
-
-    @OneToMany(mappedBy = "assignment",fetch = FetchType.LAZY)
-    private  List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 //    @Column(name = "type")
 //    private String typeCode;
 
@@ -135,14 +132,6 @@ public class BuildingEntity {
     }
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
-        return assignmentBuildingEntities;
-    }
-
-    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
-        this.assignmentBuildingEntities = assignmentBuildingEntities;
     }
 
     public String getWard() {

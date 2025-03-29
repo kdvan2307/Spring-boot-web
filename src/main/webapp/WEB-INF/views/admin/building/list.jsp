@@ -391,7 +391,7 @@
                 url: "${buildingAPI}/" +  'assignment' ,
                 data: JSON.stringify(data),
                 contentType:"application/json", // định dạng lạilại
-                dataType:"json",
+                dataType:"JSON",
                 success: function(response){
 
                     console.info("Success");
@@ -422,13 +422,14 @@
         })
         function deleBuildings(data){
             $.ajax({
-                type: "Delete",
+                type: "DELETE",
                 url: "${buildingAPI}/" + data ,
                 data: JSON.stringify(data),
                 contentType:"application/json", // định dạng lạilại
                 dataType:"JSON",
                 success: function(respond){
                     console.log("Success");
+                    window.location.href="<c:url value="/admin/building-list?message=success"/>";
                 },
                 error: function(respond){
                     console.log("failed");

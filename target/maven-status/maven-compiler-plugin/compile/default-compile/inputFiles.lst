@@ -12,7 +12,6 @@ D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\dto\AssignmentBuildingDTO.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\entity\RoleEntity.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\entity\RentAreaEntity.java
-D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\entity\AssignBuildingEntity.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\response\ResponseDTO.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\utils\NumberUtils.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\dto\RoleDTO.java
@@ -28,11 +27,15 @@ D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\controller\admin\BuildingController.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\response\StaffResponseDTO.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\builder\BuildingSearchBuilder.java
+D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\converter\RentAreaConverter.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\constant\SystemConstant.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\converter\BuildingSearchBuilderConverter.java
+D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\repository\AssignmentBuildingRepository.java
+D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\service\AssignmentBuildingService.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\service\impl\BuildingServiceImpl.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\dto\PasswordDTO.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\dto\MyUserDetail.java
+D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\service\impl\AssignmentBuildingServiceImpl.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\model\dto\UserDTO.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\repository\custom\BuildingRepositoryCustom.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\repository\custom\impl\BuildingRepositoryImpl.java
@@ -40,6 +43,7 @@ D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\repository\custom\impl\RoleRepositoryImpl.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\service\impl\RoleService.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\entity\BuildingEntity.java
+D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\entity\AssignmentBuildingEntity.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\repository\RentAreaRepository.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\enums\TypeCode.java
 D:\learn\code\java_backend\tai_lieu\Project-spring-boot-web\Exercise-4\src\main\java\com\javaweb\converter\RoleConverter.java
