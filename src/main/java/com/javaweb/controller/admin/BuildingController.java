@@ -10,6 +10,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,14 @@ public class BuildingController {
         mav.addObject("listStaffs", userService.getStaffs()); // trả ra 1 list staffs có trạng thái là 1
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());
+        if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffId(staffId);
+            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+        }
+        else{
+            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+        }
         return mav;
 
     }

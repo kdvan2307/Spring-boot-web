@@ -130,12 +130,16 @@
                                                     <form:input  class = "form-control"  path="managerPhone"/>
                                                 </div>
                                                 <div class ="col-xs-2">
-                                                    <label class = "name">Nhân Viên</label>
-                                                    <form:select class = "form-control" path="staffId">
-                                                        <form:option value="">---Chọn Nhân Viên---</form:option>
-                                                        <form:options items="${listStaffs}"></form:options>
+                                                    <security:authorize access="hasRole('MANAGER')">
+                                                        <div>
+                                                            <label class = "name">Nhân Viên</label>
+                                                            <form:select class = "form-control" path="staffId">
+                                                                <form:option value="">---Chọn Nhân Viên---</form:option>
+                                                                <form:options items="${listStaffs}"></form:options>
+                                                            </form:select>
+                                                        </div>
+                                                    </security:authorize>
 
-                                                    </form:select>
                                                 </div>
                                             </div>
 
@@ -230,18 +234,22 @@
 
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" title="Giao tòa nhà"
-                                                onclick="assignmentBuilding(${item.id})">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                        </button>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-success" title="Giao tòa nhà"
+                                                    onclick="assignmentBuilding(${item.id})">
+                                                <i class="ace-icon fa fa-check bigger-120"></i>
+                                            </button>
+                                        </security:authorize>
 
                                         <a class="btn btn-xs btn-info" href="/admin/building-edit-${item.id}" title="Sửa tòa nhà">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </a>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-danger" title="xoá tòa nhà" onclick="deleteBuilding(${item.id})">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </button>
+                                        </security:authorize>
 
-                                        <button class="btn btn-xs btn-danger" title="xoá tòa nhà" onclick="deleteBuilding(${item.id})">
-                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </button>
 
                                     </div>
 
