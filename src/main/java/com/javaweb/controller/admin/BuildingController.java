@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,7 +36,7 @@ public class BuildingController {
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest); // khi ấn tìm kiếm nó vẫn hiện ở field
-        List<BuildingSearchResponse> reponseList = buildingService.findAll(buildingSearchRequest);
+        List<BuildingSearchResponse> reponseList = buildingService.findAllBuilding(buildingSearchRequest);
         mav.addObject("buildingList", reponseList);
         mav.addObject("listStaffs", userService.getStaffs()); // trả ra 1 list staffs có trạng thái là 1
         mav.addObject("districts", District.type());
@@ -45,10 +44,10 @@ public class BuildingController {
         if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
             Long staffId = SecurityUtils.getPrincipal().getId();
             buildingSearchRequest.setStaffId(staffId);
-            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+            mav.addObject("buildings",buildingService.findAllBuilding(buildingSearchRequest));
         }
         else{
-            mav.addObject("buildings",buildingService.findAll(buildingSearchRequest));
+            mav.addObject("buildings",buildingService.findAllBuilding(buildingSearchRequest));
         }
         return mav;
 

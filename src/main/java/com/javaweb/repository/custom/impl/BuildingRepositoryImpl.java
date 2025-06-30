@@ -27,6 +27,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         if (staffId != null) {
             sql.append(" INNER JOIN assignmentbuilding ON b.id = assignmentbuilding.buildingid ");
         }
+
 //        List<String> typeCode = buildingSearchRequest.getTypeCode()	;
 //        if (typeCode != null && typeCode.size() != 0) {
 //            sql.append(" INNER JOIN buildingrenttype ON b.id = buildingrenttype.buildingid ");

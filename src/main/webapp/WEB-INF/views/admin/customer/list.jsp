@@ -1,181 +1,378 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="formUrl" value="/api/user"/>
+<c:url var="customerListURL" value="/admin/customer-list"/>
+<c:url var="customerAPI" value="/api/customer"/>
 <html>
 <head>
-    <title>Chỉnh sửa người dùng</title>
+    <title>Danh sách khách hàng </title>
 </head>
-<div class="main-content">
-    <div class="main-content-inner">
-        <div class="breadcrumbs" id="breadcrumbs">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('breadcrumbs', 'fixed')
-                } catch (e) {
-                }
-            </script>
-            <ul class="breadcrumb">
-                <li>
-                    <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Trang chủ</a>
-                </li>
-                <li class="active">Chỉnh sửa người dùng</li>
-            </ul><!-- /.breadcrumb -->
-        </div>
-        <div class="page-content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <c:if test="${not empty messageResponse}">
-                        <div class="alert alert-block alert-${alert}">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <i class="ace-icon fa fa-times"></i>
-                            </button>
-                                ${messageResponse}
-                        </div>
-                    </c:if>
-                    <form:form id="formEdit" class="form-horizontal" modelAttribute="model">
-                    <div id="profile">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">Vai trò</label>
-                            <div class="col-sm-9">
-                                <form:select path="roleCode" id="roleCode">
-                                    <form:option value="" label="--- Chọn vai trò ---"/>
-                                    <form:options items="${model.roleDTOs}"/>
-                                </form:select>
+<body>
+<div class="main-content" id="main-content">
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="#">Trang chủ</a>
+                    </li>
+                    <li class="active">Quản lý khách hàng </li>
+                </ul><!-- /.breadcrumb -->
+            </div>
+
+            <div class="page-content">
+                <div class = "row">
+                    <div class="col-xs-12">
+                        <div class="widget-box ui-sortable-handle">
+                            <div class="widget-header">
+                                <h5 class="widget-title">Tìm Kiếm</h5>
+
+                                <div class="widget-toolbar">
+
+
+                                    <a href="#" data-action="collapse">
+                                        <i class="ace-icon fa fa-chevron-up"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div class="widget-body" style="font-family:'Times New Roman', Times, serif">
+                                <div class="widget-main">
+                                    <form:form modelAttribute="modelSearchCustomer" id="listForm" action="${customerListURL}" method="GET">
+                                        <div class = "row">
+                                            <div class="col-xs-12">
+                                                <div class ="col-xs-4">
+                                                    <label class = "name">Tên khách hàng</label>
+<%--                                                    <input type ="text" class = "form-control" name = "name" value="">--%>
+                                                        <form:input  class = "form-control"  path="fullName"/>
+                                                </div>
+                                                <div class ="col-xs-4">
+                                                    <label class = "name">Di Động</label>
+<%--                                                    <input type ="number" class = "form-control" name="floorArea" value="">--%>
+                                                    <form:input  class = "form-control"  path="phone"/>
+                                                </div>
+                                                <div class ="col-xs-4">
+                                                    <label class = "name">Email</label>
+<%--                                                    <input type ="text" class = "form-control" name="ward" value="">--%>
+                                                    <form:input  class = "form-control"  path="email"/>
+                                                </div>
+                                            </div>
+
+
+<%--                                            <div class="col-xs-12">--%>
+<%--&lt;%&ndash;                                                <div class ="col-xs-2">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <label class = "name">Chọn nhân viên</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    <form:select class = "form-control" path="district">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <form:option value="">---Chọn Quận---</form:option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <form:options items="${districts}"></form:options>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    </form:select>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                </div>&ndash;%&gt;--%>
+<%--                                                 <div class ="col-xs-4">--%>
+<%--                                                    <label class = "name">Chọn nhân viên </label>--%>
+<%--&lt;%&ndash;                                                    <input type ="text" class = "form-control" name="ward" value="">&ndash;%&gt;--%>
+<%--                                                    <form:input  class = "form-control"  path="ward"/>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+
+
+                                            <div class="col-xs-12">
+                                                <div class = "col-xs-6">
+                                                    <button type="button" class="btn btn-xs btn-info" id="btnSearchCustomer">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
+                                                        </svg>
+                                                        Tìm Kiếm
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form:form>
+                                </div>
+                            </div>
+
+                            <div class="pull-right" title="Thêm khách hàng ">
+                                <a href="/admin/customer-edit">
+                                    <button class="btn btn-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
+                                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
+                                            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                            <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                        </svg>
+                                    </button>
+                                </a>
+
+                                <button class="btn btn-danger" title="Xóa khách hàng " id="btnDeleteCustomer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-dash" viewBox="0 0 16 16">
+                                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1"/>
+                                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                        <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
-                        <div class="space-4"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                <%--<spring:message code="label.username"/>--%> Tên đăng nhập
-                            </label>
-                            <div class="col-sm-9">
-                                <c:if test="${not empty model.id}">
-                                    <form:input path="userName" id="userName" cssClass="form-control" disabled="true"/>
-                                </c:if>
-                                <c:if test="${empty model.id}">
-                                    <form:input path="userName" id="userName" cssClass="form-control"/>
-                                </c:if>
-                            </div>
-                        </div>
-                        <div class="space-4"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                <%--<spring:message code="label.fullname"/>--%>
-                                Tên đầy đủ
-                            </label>
-                            <div class="col-sm-9">
-                                <form:input path="fullName" id="fullName" cssClass="form-control"/>
-                            </div>
-                        </div>
-                        <div class="space-4"></div>
-                        <!--Btn-->
-                        <div class="col-sm-12">
-                            <label class="col-sm-3 control-label no-padding-right message-info"></label>
-                            <c:if test="${not empty model.id}">
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Cập nhật người dùng" id="btnAddOrUpdateUsers"/>
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Reset mật khẩu" id="btnResetPassword"/>
-                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
-                            </c:if>
-                            <c:if test="${empty model.id}">
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Thêm mới người dùng" id="btnAddOrUpdateUsers"/>
-                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
-                            </c:if>
-                        </div>
-                        <!--Btn-->
-                        <form:hidden path="id" id="userId"/>
-                        </form:form>
                     </div>
                 </div>
+
+                <!-- Bảng danh sách -->
+                <div class="col-xs-12">
+                    <table id="tableList" style="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                            <th class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" class="ace">
+                                    <span class="lbl"></span>
+                                </label>
+                            </th>
+                            <th>Tên khách hàng</th>
+                            <th>Di động</th>
+                            <th>Email</th>
+                            <th>Nhu cầu </th>
+                            <th>Người thêm</th>
+                            <th>Ngày thêm</th>
+                            <th>Tình trạng</th>
+                            <th>Thao tác</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach var="item" items="${customerList}">
+                            <tr>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace" name="checkList" value="${item.id}">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+
+                                <td>${item.fullName}</td>
+                                <td>${item.phone}</td>
+                                <td>${item.email}</td>
+                                <td>${item.demand}</td>
+                                <td>${item.createdBy}</td>
+                                <td>${item.createdDate}</td>
+                                <td>${item.status}</td>
+                                <td>${item.id}</td>
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-success" title="Giao khách hàng "
+                                                    onclick="assignmentBuilding(${item.id})">
+                                                <i class="ace-icon fa fa-check bigger-120"></i>
+                                            </button>
+                                        </security:authorize>
+
+                                        <a class="btn btn-xs btn-info" href="/admin/customer-edit-${item.id}" title="Sửa khách hàng ">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
+                                        <security:authorize access="hasRole('MANAGER')">
+                                            <button class="btn btn-xs btn-danger" title="xoá khách hàng " onclick="deleteCustomer(${item.id})">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </button>
+                                        </security:authorize>
+
+
+                                    </div>
+
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-primary dropdown-toggle"
+                                                    data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                            </button>
+
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title=""
+                                                       data-original-title="View">
+                                                                        <span class="blue">
+                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title=""
+                                                       data-original-title="Edit">
+                                                                        <span class="green">
+                                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                        </span>
+                                                    </a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title=""
+                                                       data-original-title="Delete">
+                                                                        <span class="red">
+                                                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div>
+<div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Danh sách nhân viên</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered table-hover" id="staffList">
+                    <thead>
+                        <tr>
+                            <th class="center">Chọn</th>
+                            <th>Tên nhân viên</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <input type="hidden" id="buildingId" name="BuildingId" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnassignmentBuilding">Giao tòa nhà</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
         </div>
+
     </div>
 </div>
-<script>
-    $("#btnAddOrUpdateUsers").click(function (event) {
-        event.preventDefault();
-        var formData = $("#formEdit").serializeArray();
-        var dataArray = {};
-        $.each(formData, function (i, v) {
-            dataArray["" + v.name + ""] = v.value;
-        });
-        if ($('#userId').val() != "") {
-            var userId = $('#userId').val();
-            var roleCode = dataArray['roleCode'];
-            if (roleCode != '') {
-                updateUser(dataArray, $('#userId').val());
-            } else {
-                window.location.href = "<c:url value='/admin/user-edit-"+userId+"?message=role_require'/>";
-            }
+
+    <script>
+        function assignmentBuilding(buildingId){
+            $('#assignmentBuildingModal').modal();
+            loadStaff(buildingId);
+            $('#buildingId').val(buildingId);
+
         }
-        else {
-            var userName = dataArray['userName'];
-            var roleCode = dataArray['roleCode'];
-            if (userName != '' && roleCode != '') {
-                $('#loading_image').show();
-                addUser(dataArray);
-            } else {
-                window.location.href = "<c:url value='/admin/user-edit?message=username_role_require'/>";
-            }
+
+        // gửi yêu cầu AJAX GET để lấy danh sách nhân viên đang được phân công vào một tòa nhà cụ thể (buildingId)
+        // và hiển thị danh sách này trong bảng HTML.
+        function loadStaff(buildingId){
+            $.ajax({
+                type: "GET",
+                url: "${buildingAPI}/" + buildingId +'/staffs' ,
+              //  data: JSON.stringify(data),
+                //contentType:"application/json", // định dạng lạilại
+                dataType:"json",
+                success: function(response){
+                    var row ='';
+                    $.each(response.data,function (index,item){
+                        // response.data là một mảng danh sách nhân viên nhận được từ API
+                        //     index: vị trí của phần tử trong mảng.
+                        //     item: đối tượng nhân viên chứa thông tin như staffId, fullName, checked.
+                        row += '<tr>';
+                        row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id = "checkbox_'+ item.staffId +'" class = "check-box-element"' +  item.checked + '/></td>';
+                        row += '<td class= "text-center">' + item.fullName + '</td>';
+                        row += '</tr>';
+                    });
+                    $('#staffList tbody').html(row);
+                    console.info("Success");
+                },
+                error: function(response){
+                    console.log("failed");
+                    window.location.href="<c:url value="/admin/customer-list?message=error"/>";
+                    console.log(response);
+                }
+            });
         }
-    });
-
-    $('#btnResetPassword').click(function (event) {
-        event.preventDefault();
-        $('#loading_image').show();
-        resetPassword($('#userId').val());
-    });
-
-    function addUser(data) {
-        $.ajax({
-            url: '${formUrl}',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (res) {
-                $('#loading_image').hide();
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=insert_success'/>";
-            },
-            error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=error_system'/>";
+        // khi ấn vào nút giao tòa nhà
+        $('#btnassignmentBuilding').click(function(e){
+            e.preventDefault();
+            var data ={};
+            data['buildingId'] = $('#buildingId').val();
+            var staffs =$('#staffList').find('tbody input[type = checkbox]:checked').map(function(){
+                return $(this).val();
+            }).get();
+            data['staffs'] = staffs;
+            if (data['staffs'] !=''){
+                assignment(data);
             }
-        });
-    }
+            console.log("OK");
+        })
+        //  gửi ajax để cập nhật danh sách nhân viên
+        function assignment(data){
+            $.ajax({
+                type: "POST",
+                url: "${buildingAPI}/" +  'assignment' ,
+                data: JSON.stringify(data),
+                contentType:"application/json", // định dạng lạilại
+                dataType:"JSON",
+                success: function(response){
 
-    function updateUser(data, id) {
-        $.ajax({
-            url: '${formUrl}/' + id,
-            type: 'PUT',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=update_success'/>";
-            },
-            error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+id+"?message=error_system'/>";
-            }
-        });
-    }
+                    console.info("Success");
+                },
+                error: function(response){
+                    console.log("Giao khong thanh cong");
+                    window.location.href="<c:url value="/admin/building-list?message=error"/>";
+                    console.log(response);
+                }
+            });
+        }
 
-    function resetPassword(id) {
-        $.ajax({
-            url: '${formUrl}/password/'+id+'/reset',
-            type: 'PUT',
-            dataType: 'json',
-            success: function (res) {
-                $('#loading_image').hide();
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=reset_password_success'/>";
-            },
-            error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+id+"?message=error_system'/>";
-            }
-        });
-    }
-</script>
+        $('#btnSearchCustomer').click(function(e){
+            e.preventDefault();
+           $('#listForm').submit();
+        })
+        function deleteCustomer(id){
+            var customerId = [id];
+            deleteCustomers(customerId);
+        }
+        $('#btnDeleteCustomer').click(function(e){
+            e.preventDefault();
+            var data = {};
+            var customerIds =$('#tableList').find('tbody input[type = checkbox]:checked').map(function(){
+                return $(this).val();
+            }).get();
+            deleteCustomers(customerIds);
+        })
+        function deleteCustomers(data){
+            $.ajax({
+                type: "DELETE",
+                url: "${customerAPI}/" + data ,
+                data: JSON.stringify(data),
+                contentType:"application/json", // định dạng lạilại
+                dataType:"JSON",
+                success: function(respond){
+                    console.log("Success");
+                    window.location.href="<c:url value="/admin/building-list?message=success"/>";
+                },
+                error: function(respond){
+                    console.log("failed");
+                    console.log(respond);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

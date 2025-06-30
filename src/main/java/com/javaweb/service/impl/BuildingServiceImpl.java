@@ -74,7 +74,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
+    public List<BuildingSearchResponse> findAllBuilding(BuildingSearchRequest buildingSearchRequest) {
         BuildingSearchBuilder buildingSearchBuilder = buildingSearchBuilderConverter.toBuildingSearchBuilder(buildingSearchRequest);
         List<BuildingEntity> buildingEntities = buildingRepository.findAll(buildingSearchBuilder);
         List <BuildingSearchResponse> result = new ArrayList<BuildingSearchResponse>();
