@@ -65,20 +65,19 @@
                                             </div>
 
 
-<%--                                            <div class="col-xs-12">--%>
-<%--&lt;%&ndash;                                                <div class ="col-xs-2">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                    <label class = "name">Chọn nhân viên</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                    <form:select class = "form-control" path="district">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                        <form:option value="">---Chọn Quận---</form:option>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                        <form:options items="${districts}"></form:options>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                    </form:select>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                                </div>&ndash;%&gt;--%>
-<%--                                                 <div class ="col-xs-4">--%>
-<%--                                                    <label class = "name">Chọn nhân viên </label>--%>
-<%--&lt;%&ndash;                                                    <input type ="text" class = "form-control" name="ward" value="">&ndash;%&gt;--%>
-<%--                                                    <form:input  class = "form-control"  path="ward"/>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
+                                            <div class="col-xs-12">
+                                                 <div class ="col-xs-4">
+                                                        <security:authorize access="hasRole('MANAGER')">
+                                                            <div>
+                                                                <label class = "name">Nhân Viên</label>
+                                                                <form:select class = "form-control" path="staffId">
+                                                                    <form:option value="">---Chọn Nhân Viên---</form:option>
+                                                                    <form:options items="${listStaffs}"></form:options>
+                                                                </form:select>
+                                                            </div>
+                                                        </security:authorize>
+                                                </div>
+                                            </div>
 
 
                                             <div class="col-xs-12">
@@ -159,12 +158,11 @@
                                 <td>${item.createdBy}</td>
                                 <td>${item.createdDate}</td>
                                 <td>${item.status}</td>
-                                <td>${item.id}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <security:authorize access="hasRole('MANAGER')">
                                             <button class="btn btn-xs btn-success" title="Giao khách hàng "
-                                                    onclick="assignmentBuilding(${item.id})">
+                                                    onclick="assignmentCustomer(${item.id})">
                                                 <i class="ace-icon fa fa-check bigger-120"></i>
                                             </button>
                                         </security:authorize>
@@ -234,7 +232,7 @@
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div>
-<div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+<div class="modal fade" id="assignmentCustomerModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -257,10 +255,10 @@
 
                     </tbody>
                 </table>
-                <input type="hidden" id="buildingId" name="BuildingId" value="">
+                <input type="hidden" id="customerId" name="CustomerId" value="">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnassignmentBuilding">Giao tòa nhà</button>
+                <button type="button" class="btn btn-default" id="btnassignmentCustomer">Giao khách hàng</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
         </div>
@@ -269,19 +267,19 @@
 </div>
 
     <script>
-        function assignmentBuilding(buildingId){
-            $('#assignmentBuildingModal').modal();
-            loadStaff(buildingId);
-            $('#buildingId').val(buildingId);
+        function assignmentCustomer(customerId){
+            $('#assignmentCustomerModal').modal();
+            loadStaff(customerId);
+            $('#customerId').val(customerId);
 
         }
 
         // gửi yêu cầu AJAX GET để lấy danh sách nhân viên đang được phân công vào một tòa nhà cụ thể (buildingId)
         // và hiển thị danh sách này trong bảng HTML.
-        function loadStaff(buildingId){
+        function loadStaff(customerId){
             $.ajax({
                 type: "GET",
-                url: "${buildingAPI}/" + buildingId +'/staffs' ,
+                url: "${customerAPI}/" + customerId +'/staffs' ,
               //  data: JSON.stringify(data),
                 //contentType:"application/json", // định dạng lạilại
                 dataType:"json",
@@ -307,10 +305,10 @@
             });
         }
         // khi ấn vào nút giao tòa nhà
-        $('#btnassignmentBuilding').click(function(e){
+        $('#btnassignmentCustomer').click(function(e){
             e.preventDefault();
             var data ={};
-            data['buildingId'] = $('#buildingId').val();
+            data['customerId'] = $('#customerId').val();
             var staffs =$('#staffList').find('tbody input[type = checkbox]:checked').map(function(){
                 return $(this).val();
             }).get();
@@ -324,7 +322,7 @@
         function assignment(data){
             $.ajax({
                 type: "POST",
-                url: "${buildingAPI}/" +  'assignment' ,
+                url: "${customerAPI}/" +  'assignment' ,
                 data: JSON.stringify(data),
                 contentType:"application/json", // định dạng lạilại
                 dataType:"JSON",
@@ -334,7 +332,7 @@
                 },
                 error: function(response){
                     console.log("Giao khong thanh cong");
-                    window.location.href="<c:url value="/admin/building-list?message=error"/>";
+                    window.location.href="<c:url value="/admin/customer-list?message=error"/>";
                     console.log(response);
                 }
             });

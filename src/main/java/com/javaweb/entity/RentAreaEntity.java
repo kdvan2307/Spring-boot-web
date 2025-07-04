@@ -1,5 +1,8 @@
 package com.javaweb.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "rentarea")
 public class RentAreaEntity {
@@ -20,33 +24,9 @@ public class RentAreaEntity {
     @Column(name = "value")
     private Long value;
 
-    public Long getValue() {
-        return value;
-    }
-
-    public void setValue(Long value) {
-        this.value = value;
-    }
-
     @ManyToOne
     @JoinColumn(name = "buildingid")
     private BuildingEntity building;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BuildingEntity getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(BuildingEntity building) {
-        this.building = building;
-    }
 
 
 

@@ -1,7 +1,12 @@
 package com.javaweb.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "assignmentbuilding")
 public class AssignmentBuildingEntity extends BaseEntity {
@@ -17,29 +22,7 @@ public class AssignmentBuildingEntity extends BaseEntity {
     @JoinColumn(name = "buildingid")
     private BuildingEntity assignment;
 
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BuildingEntity getAssignment() {
-        return assignment;
-    }
-
-    public void setAssignment(BuildingEntity assignment) {
-        this.assignment = assignment;
-    }
 
 
 }

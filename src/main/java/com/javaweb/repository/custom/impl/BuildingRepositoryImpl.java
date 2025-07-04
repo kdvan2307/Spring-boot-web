@@ -104,7 +104,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         StringBuilder sql = new StringBuilder( "SELECT b.* FROM building b");
         joinTable(buildingSearchBuilder, sql);
         StringBuilder where = new StringBuilder(" WHERE 1=1 ");
-//		queryNomal(buildingSearchBuilder, where);
         queryNomal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
         where.append(" GROUP BY b.id;");

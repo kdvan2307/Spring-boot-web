@@ -15,6 +15,8 @@ public interface CustomerConverter {
 
     CustomerResponse toResponse(CustomerEntity customerEntity);
 
+    CustomerRequest toCustomerRequest(CustomerEntity customerEntity);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntity(@MappingTarget CustomerEntity customerEntity, CustomerRequest customerRequest);
 

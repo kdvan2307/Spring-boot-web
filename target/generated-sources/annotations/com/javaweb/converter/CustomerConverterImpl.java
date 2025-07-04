@@ -3,13 +3,14 @@ package com.javaweb.converter;
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.model.request.CustomerRequest;
 import com.javaweb.model.response.CustomerResponse;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-25T21:10:01+0700",
+    date = "2025-07-04T11:37:47+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 1.8.0_202 (Oracle Corporation)"
 )
 @Component
@@ -68,6 +69,9 @@ public class CustomerConverterImpl implements CustomerConverter {
 
         CustomerResponse customerResponse = new CustomerResponse();
 
+        if ( customerEntity.getId() != null ) {
+            customerResponse.setId( customerEntity.getId() );
+        }
         if ( customerEntity.getFullName() != null ) {
             customerResponse.setFullName( customerEntity.getFullName() );
         }
@@ -91,6 +95,61 @@ public class CustomerConverterImpl implements CustomerConverter {
         }
 
         return customerResponse;
+    }
+
+    @Override
+    public CustomerRequest toCustomerRequest(CustomerEntity customerEntity) {
+        if ( customerEntity == null ) {
+            return null;
+        }
+
+        CustomerRequest customerRequest = new CustomerRequest();
+
+        if ( customerEntity.getId() != null ) {
+            customerRequest.setId( customerEntity.getId() );
+        }
+        try {
+            if ( customerEntity.getCreatedDate() != null ) {
+                customerRequest.setCreatedDate( new SimpleDateFormat().parse( customerEntity.getCreatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        if ( customerEntity.getCreatedBy() != null ) {
+            customerRequest.setCreatedBy( customerEntity.getCreatedBy() );
+        }
+        try {
+            if ( customerEntity.getModifiedDate() != null ) {
+                customerRequest.setModifiedDate( new SimpleDateFormat().parse( customerEntity.getModifiedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        if ( customerEntity.getModifiedBy() != null ) {
+            customerRequest.setModifiedBy( customerEntity.getModifiedBy() );
+        }
+        if ( customerEntity.getFullName() != null ) {
+            customerRequest.setFullName( customerEntity.getFullName() );
+        }
+        if ( customerEntity.getPhone() != null ) {
+            customerRequest.setPhone( customerEntity.getPhone() );
+        }
+        if ( customerEntity.getEmail() != null ) {
+            customerRequest.setEmail( customerEntity.getEmail() );
+        }
+        if ( customerEntity.getCompanyName() != null ) {
+            customerRequest.setCompanyName( customerEntity.getCompanyName() );
+        }
+        if ( customerEntity.getDemand() != null ) {
+            customerRequest.setDemand( customerEntity.getDemand() );
+        }
+        if ( customerEntity.getStatus() != null ) {
+            customerRequest.setStatus( customerEntity.getStatus() );
+        }
+
+        return customerRequest;
     }
 
     @Override

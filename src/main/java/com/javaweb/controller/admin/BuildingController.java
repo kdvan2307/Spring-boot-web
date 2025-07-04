@@ -32,6 +32,7 @@ public class BuildingController {
     private BuildingRepository buildingRepository;
     @Autowired
     private BuildingConverter buildingConverter;
+
     @GetMapping(value="/admin/building-list")
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
@@ -50,8 +51,8 @@ public class BuildingController {
             mav.addObject("buildings",buildingService.findAllBuilding(buildingSearchRequest));
         }
         return mav;
-
     }
+
     @GetMapping(value="/admin/building-edit")
     public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO,HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
@@ -60,6 +61,7 @@ public class BuildingController {
         return mav;
 
     }
+
     @RequestMapping(value="/admin/building-edit-{id}",method = RequestMethod.GET)
     public ModelAndView buildingEdit(@PathVariable("id") Long Id, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");

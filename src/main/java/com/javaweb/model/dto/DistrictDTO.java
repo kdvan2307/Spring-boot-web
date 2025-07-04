@@ -1,13 +1,12 @@
 package com.javaweb.model.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DistrictDTO {
     private Long[] Buildingids;
 
-    public Long[] getBuildingids() {
-        return Buildingids;
-    }
 
-    public void setBuildingids(Long[] buildingids) {
-        Buildingids = buildingids;
-    }
 }

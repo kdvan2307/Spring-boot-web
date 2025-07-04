@@ -3,6 +3,8 @@ package com.javaweb.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -50,6 +52,10 @@ public class CustomerEntity {
     @Column(name = "modifiedby")
     private String modifiedBy;
 
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "customerid",nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
+    private List<UserEntity> usersEntities = new ArrayList<>();
 
 }
