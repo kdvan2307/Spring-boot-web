@@ -13,8 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name ="building")
-public class BuildingEntity {
-
+public class BuildingEntity  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

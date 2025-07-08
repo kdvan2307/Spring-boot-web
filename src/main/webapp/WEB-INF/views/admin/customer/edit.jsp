@@ -96,7 +96,7 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <form:hidden path="id" id="customerId"/>
+                            <form:hidden path="id" id="customerFormId"/><input type="hidden" id="modalCustomerId" name="customerId" value="">
                         </form>
                     </div>
                     </form:form>
@@ -109,98 +109,36 @@
             <c:forEach var="item" items="${transactionType}">
                 <div class="col-xs-12">
                     <div class="col-sm-12">
-                        <h3 class="header smaller lighter blue"> ${item.value}</h3>
-                        <button class="btn btn-lg btn-primary" onclick="transactionType('${item.key}',${customerEdit.id})">
+                        <h3 class="header smaller lighter blue">${item.value}</h3>
+                        <button class="btn btn-lg btn-primary" onclick="transactionType('${item.key}', '${customerEdit.id}')">
                             <i class="orange ace-icon fa fa-location-arrow bigger-130"></i>Add
                         </button>
                     </div>
-                    <c:if test="${item.key == 'CSKH'}">
+
+                    <c:if test="${item.key == 'CSKH' || item.key == 'DDX'}">
                         <div class="col-xs-12">
-                            <table id="simple-table" class="table table-striped table-bordered table-hover">
-                                <thread>
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead> <!-- ✅ Sửa từ <thread> -->
                                 <tr>
                                     <th>Ngày tạo</th>
                                     <th>Người tạo</th>
                                     <th>Chi tiết giao dịch</th>
                                     <th>Thao tác</th>
-
                                 </tr>
-                                </thread>
+                                </thead>
 
                                 <tbody>
-                                <c:forEach var="item" items="${customerList}">
+                                <c:forEach var="tran" items="${item.key == 'CSKH' ? cskh : ddx}">
                                     <tr>
-                                        <td class="center">
-                                            <label class="pos-rel">
-                                                <input type="checkbox" class="ace" name="checkList" value="${item.id}">
-                                                <span class="lbl"></span>
-                                            </label>
-                                        </td>
-
-                                        <td>${item.fullName}</td>
-                                        <td>${item.phone}</td>
-                                        <td>${item.email}</td>
-                                        <td>${item.demand}</td>
-                                        <td>${item.createdBy}</td>
-                                        <td>${item.createdDate}</td>
-                                        <td>${item.status}</td>
+                                        <td>${tran.createdDate}</td>
+                                        <td>${tran.createdBy}</td>
+                                        <td>${tran.transactionDetail}</td>
                                         <td>
                                             <div class="hidden-sm hidden-xs btn-group">
-                                                <security:authorize access="hasRole('MANAGER')">
-                                                    <button class="btn btn-xs btn-success" title="Giao khách hàng "
-                                                            onclick="assignmentBuilding(${item.id})">
-                                                        <i class="ace-icon fa fa-check bigger-120"></i>
-                                                    </button>
-                                                </security:authorize>
-
-                                                <a class="btn btn-xs btn-info" href="/admin/customer-edit-${item.id}" title="Sửa khách hàng ">
+                                                <a class="btn btn-xs btn-info" title="Sửa thông tin giao dịch"
+                                                   onclick="UpdateTransaction('${tran.id}', '${item.key}')">
                                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                                 </a>
-                                                <security:authorize access="hasRole('MANAGER')">
-                                                    <button class="btn btn-xs btn-danger" title="xoá khách hàng " onclick="deleteCustomer(${item.id})">
-                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                    </button>
-                                                </security:authorize>
-
-
-                                            </div>
-
-                                            <div class="hidden-md hidden-lg">
-                                                <div class="inline pos-rel">
-                                                    <button class="btn btn-minier btn-primary dropdown-toggle"
-                                                            data-toggle="dropdown" data-position="auto">
-                                                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                                    </button>
-
-                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                        <li>
-                                                            <a href="#" class="tooltip-info" data-rel="tooltip" title=""
-                                                               data-original-title="View">
-                                                                                <span class="blue">
-                                                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                                </span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="#" class="tooltip-success" data-rel="tooltip" title=""
-                                                               data-original-title="Edit">
-                                                                                <span class="green">
-                                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                                                </span>
-                                                            </a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="#" class="tooltip-error" data-rel="tooltip" title=""
-                                                               data-original-title="Delete">
-                                                                                <span class="red">
-                                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                                                </span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -212,67 +150,128 @@
                 </div>
             </c:forEach>
 
+
         </div>
     </div><!-- /.main-content -->
-    <div class="modal fade" id="transactionTypeModal" role="dialog" >
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-<%--                    <button type="button" class="close" data-dismiss="modal"></button>--%>
-                    <h4 class="modal-title">Nhập giao dịch</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group has-success">
-                        <label for="transactionDetail" class="col-xs-12 col-sm-3 control-label no-padding-right">Chi tiết giao dịch</label>
-                        <div class="col-xs-12 col-sm-9">
-                        <span class="block input-icon input-icon-right">
-                            <input type="text" id = "transactionDetail" class="width-100">
-                        </span>
-                        </div>
-                    </div>
-
-                    <input type="hidden" id="customerId" name="customerId" value="">
-                    <input type="hidden" id="code" name="code" value="">
-                    <input type="hidden" id="id" name="id" value="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="btnAddOrUpdateTransaction">Thêm giao dịch</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
     </a>
 </div><!-- /.main-container -->
+<div class="modal fade" id="transactionTypeModal" role="dialog" >
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+<%--                    <button type="button" class="close" data-dismiss="modal"></button>--%>
+                <h4 class="modal-title">Nhập giao dịch</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group has-success">
+                    <label for="transactionDetail" class="col-xs-12 col-sm-3 control-label no-padding-right">Chi tiết giao dịch</label>
+                    <div class="col-xs-12 col-sm-9">
+                    <span class="block input-icon input-icon-right">
+                        <input type="text" id = "transactionDetail" class="width-100">
+                    </span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="customerId" name="customerId" value="">
+                <input type="hidden" id="code" name="code" value="">
+                <input type="hidden" id="id" name="id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnAddOrUpdateTransaction">Thêm giao dịch</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 
     function transactionType(code, customerId){
-        $('transactionTypeModal').modal();
-        $('#customerId').val(customerId);
+        $('#transactionTypeModal').modal();
+        $('#modalCustomerId').val(customerId);  // ✅ Sửa từ #customerId thành #modalCustomerId
         $('#code').val(code);
     }
 
-    function UpdateTransaction(id){
+    function UpdateTransaction(id,code){
         $('#transactionTypeModal').modal();
         $('#id').val(id);
+        $('#code').val(code);
+        $('#modalCustomerId').val($('#customerFormId').val());  // ✅ Thêm dòng này
+        loadTransaction(id);
     }
 
     $('#btnAddOrUpdateTransaction').click(function (e){
         e.preventDefault();
+    
         var data = {};
         data['id'] = $('#id').val();
-        data['customerId'] = $('#customerId').val();
+        data['customerId'] = $('#modalCustomerId').val();  // ✅ Sửa từ #customerId thành #modalCustomerId
         data['code'] = $('#code').val();
         data['transactionDetail'] = $('#transactionDetail').val();
 
-        addTransaction(data);
+        if (data.id && data.id !== "") {
+            updateTransaction(data);
+        } else {
+            addTransaction(data);
+        }
     });
+
+    function addTransaction(data){
+        $.ajax({
+            type: "POST",
+            url: '${customerAPI}/transaction',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function () {
+                console.log("success");
+                alert("Thêm giao dịch thành công");
+                location.reload();
+            },
+            error: function () {
+                console.log("failed");
+                alert("Thêm giao dịch thất bại");
+            }
+        });
+    }
+
+    function updateTransaction(data){
+        $.ajax({
+            type: "POST",
+            url: '${customerAPI}/transaction',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (data) {
+                console.log("success");
+                alert("Cập nhật giao dịch thành công");
+                location.reload();
+            },
+            error: function () {
+                console.log("failed");
+                alert("Cập nhật giao dịch thất bại");
+            }
+        });
+    }
+
+    function loadTransaction(id){
+        $.ajax({
+            url: '${customerAPI}/transaction/' + id + '/detail',
+            type: "GET",
+            dataType: "json",
+            success: function (res) {
+                $('#transactionDetail').val(res.data); // ⚠ đúng field
+            },
+            error: function () {
+                alert("Không tải được thông tin giao dịch.");
+            }
+        });
+    }
+
+
 
     $('#btnAddOrUpdateCustomer').click(function(){
         var data={};
@@ -282,6 +281,7 @@
         });
         addOrUpdateCustomer(data);
     });
+
     function addOrUpdateCustomer(data){
         $.ajax({
             type: "POST",

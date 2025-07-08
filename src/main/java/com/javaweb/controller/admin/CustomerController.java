@@ -7,17 +7,17 @@ import com.javaweb.converter.CustomerConverter;
 import com.javaweb.entity.CustomerEntity;
 
 import com.javaweb.enums.TransactionType;
+import com.javaweb.model.response.TransactionResponse;
 import com.javaweb.model.request.CustomerRequest;
 import com.javaweb.model.request.CustomerSearchRequest;
 
 import com.javaweb.model.response.CustomerResponse;
 import com.javaweb.repository.CustomerRepository;
 import com.javaweb.service.CustomerService;
-import com.javaweb.service.impl.CustomerServiceImpl;
+import com.javaweb.service.TransactionService;
 import com.javaweb.service.impl.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +36,8 @@ public class CustomerController {
     private final CustomerConverter customerConverter;
 
     private final UserService userService;
+
+    private final TransactionService transactionService;
 
     @GetMapping(value="/admin/customer-list")
     public ModelAndView customerList(@ModelAttribute CustomerSearchRequest customerSearchRequest, HttpServletRequest request) {
@@ -61,6 +63,10 @@ public class CustomerController {
         CustomerRequest customerRequest = customerConverter.toCustomerRequest(customerEntity);
         mav.addObject("transactionType", TransactionType.transactionType());
         mav.addObject("customerEdit", customerRequest);
+        List<TransactionResponse> dto1 = transactionService.listTransaction(Id,TransactionType.CSKH.name());
+        mav.addObject("cskh",dto1);
+        List<TransactionResponse> dto2 = transactionService.listTransaction(Id,TransactionType.DDX.name());
+        mav.addObject("ddx",dto2);
         return mav;
 
     }

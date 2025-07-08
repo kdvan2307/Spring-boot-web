@@ -3,14 +3,13 @@ package com.javaweb.converter;
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.model.request.CustomerRequest;
 import com.javaweb.model.response.CustomerResponse;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-04T11:37:47+0700",
+    date = "2025-07-06T18:22:22+0700",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 1.8.0_202 (Oracle Corporation)"
 )
 @Component
@@ -45,18 +44,6 @@ public class CustomerConverterImpl implements CustomerConverter {
         if ( customerRequest.getStatus() != null ) {
             customerEntity.status( customerRequest.getStatus() );
         }
-        if ( customerRequest.getCreatedDate() != null ) {
-            customerEntity.createdDate( new SimpleDateFormat().format( customerRequest.getCreatedDate() ) );
-        }
-        if ( customerRequest.getModifiedDate() != null ) {
-            customerEntity.modifiedDate( new SimpleDateFormat().format( customerRequest.getModifiedDate() ) );
-        }
-        if ( customerRequest.getCreatedBy() != null ) {
-            customerEntity.createdBy( customerRequest.getCreatedBy() );
-        }
-        if ( customerRequest.getModifiedBy() != null ) {
-            customerEntity.modifiedBy( customerRequest.getModifiedBy() );
-        }
 
         return customerEntity.build();
     }
@@ -88,7 +75,7 @@ public class CustomerConverterImpl implements CustomerConverter {
             customerResponse.setCreatedBy( customerEntity.getCreatedBy() );
         }
         if ( customerEntity.getCreatedDate() != null ) {
-            customerResponse.setCreatedDate( customerEntity.getCreatedDate() );
+            customerResponse.setCreatedDate( new SimpleDateFormat().format( customerEntity.getCreatedDate() ) );
         }
         if ( customerEntity.getStatus() != null ) {
             customerResponse.setStatus( customerEntity.getStatus() );
@@ -108,24 +95,14 @@ public class CustomerConverterImpl implements CustomerConverter {
         if ( customerEntity.getId() != null ) {
             customerRequest.setId( customerEntity.getId() );
         }
-        try {
-            if ( customerEntity.getCreatedDate() != null ) {
-                customerRequest.setCreatedDate( new SimpleDateFormat().parse( customerEntity.getCreatedDate() ) );
-            }
-        }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
+        if ( customerEntity.getCreatedDate() != null ) {
+            customerRequest.setCreatedDate( customerEntity.getCreatedDate() );
         }
         if ( customerEntity.getCreatedBy() != null ) {
             customerRequest.setCreatedBy( customerEntity.getCreatedBy() );
         }
-        try {
-            if ( customerEntity.getModifiedDate() != null ) {
-                customerRequest.setModifiedDate( new SimpleDateFormat().parse( customerEntity.getModifiedDate() ) );
-            }
-        }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
+        if ( customerEntity.getModifiedDate() != null ) {
+            customerRequest.setModifiedDate( customerEntity.getModifiedDate() );
         }
         if ( customerEntity.getModifiedBy() != null ) {
             customerRequest.setModifiedBy( customerEntity.getModifiedBy() );
@@ -158,6 +135,18 @@ public class CustomerConverterImpl implements CustomerConverter {
             return;
         }
 
+        if ( customerRequest.getCreatedDate() != null ) {
+            customerEntity.setCreatedDate( customerRequest.getCreatedDate() );
+        }
+        if ( customerRequest.getCreatedBy() != null ) {
+            customerEntity.setCreatedBy( customerRequest.getCreatedBy() );
+        }
+        if ( customerRequest.getModifiedDate() != null ) {
+            customerEntity.setModifiedDate( customerRequest.getModifiedDate() );
+        }
+        if ( customerRequest.getModifiedBy() != null ) {
+            customerEntity.setModifiedBy( customerRequest.getModifiedBy() );
+        }
         if ( customerRequest.getId() != null ) {
             customerEntity.setId( customerRequest.getId() );
         }
@@ -178,18 +167,6 @@ public class CustomerConverterImpl implements CustomerConverter {
         }
         if ( customerRequest.getStatus() != null ) {
             customerEntity.setStatus( customerRequest.getStatus() );
-        }
-        if ( customerRequest.getCreatedDate() != null ) {
-            customerEntity.setCreatedDate( new SimpleDateFormat().format( customerRequest.getCreatedDate() ) );
-        }
-        if ( customerRequest.getModifiedDate() != null ) {
-            customerEntity.setModifiedDate( new SimpleDateFormat().format( customerRequest.getModifiedDate() ) );
-        }
-        if ( customerRequest.getCreatedBy() != null ) {
-            customerEntity.setCreatedBy( customerRequest.getCreatedBy() );
-        }
-        if ( customerRequest.getModifiedBy() != null ) {
-            customerEntity.setModifiedBy( customerRequest.getModifiedBy() );
         }
     }
 }

@@ -348,7 +348,7 @@
 
         }
 
-        // gửi yêu cầu AJAX GET để lấy danh sách nhân viên đang được phân công vào một tòa nhà cụ thể (buildingId)
+        // gửi yêu cầu AJAX GET để lấy danh sách nhân viên đang được phân công vào một tòa nhà cụ thể (buildingId) (gọi API)
         // và hiển thị danh sách này trong bảng HTML.
         function loadStaff(buildingId){
             $.ajax({
